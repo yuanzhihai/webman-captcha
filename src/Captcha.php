@@ -68,7 +68,7 @@ class Captcha
      * @return array
      * @throws Exception
      */
-    protected function generate(): array
+    public function generate(): array
     {
         $bag = '';
 

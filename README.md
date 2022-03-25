@@ -15,6 +15,16 @@ public function captcha()
 }
 ~~~
 
+### 生成结果
+
+```
+{
+  "key": "Qh8kHYF4C....",//验证码key
+  "value": "data:image/jpeg;base64,/9j/...."//base64验证码图片 -- 前端渲染显示
+}
+
+```
+
 
 
 ### 验证

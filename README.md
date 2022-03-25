@@ -9,7 +9,7 @@ webman  验证码类库 支持前后端分离，api接口调用
 
 
 ~~~
-public function captcha($id = '')
+public function captcha()
 {
    return yzh52521\captcha\facade\Captcha::create();
 }

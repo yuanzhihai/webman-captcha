@@ -11,7 +11,7 @@ webman  验证码类库 支持前后端分离，api接口调用
 ~~~
 public function captcha($id = '')
 {
-   return yzh52521\captcha\facade\Captcha::generate();
+   return yzh52521\captcha\facade\Captcha::create();
 }
 ~~~
 

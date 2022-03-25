@@ -68,7 +68,7 @@ class Captcha
      * @return array
      * @throws Exception
      */
-    public function generate(): array
+    protected function generate(): array
     {
         $bag = '';
 
@@ -140,9 +140,8 @@ class Captcha
 
 
     /**
-     * 输出验证码并把验证码的值保存的session中
+     * 输出验证码并把验证码的值保存的cache中
      * @access public
-     * @param null|string $config
      * @return array
      * @throws Exception
      */

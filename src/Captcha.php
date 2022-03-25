@@ -105,7 +105,7 @@ class Captcha
             $key = mb_strtolower($bag, 'UTF-8');
         }
 
-        $hash = password_hash($key, PASSWORD_BCRYPT, ['cost' => 10]);
+        $hash = hash('md5', $key);
 
         Cache::set('captcha.' . $hash, 1, $this->expire);
 

@@ -10,7 +10,9 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.4",
-        "workerman/webman-framework": "^1.2.1"
+        "workerman/webman-framework": "^1.2.1",
+        "ext-mbstring": "*",
+      "ext-gd": "*"
     },
     "autoload": {
         "psr-4": {

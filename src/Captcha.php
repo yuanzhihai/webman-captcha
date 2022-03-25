@@ -3,7 +3,7 @@
 namespace yzh52521\captcha;
 
 use Exception;
-use support\Cache;
+use support\Redis;
 
 class Captcha
 {
@@ -105,9 +105,9 @@ class Captcha
             $key = mb_strtolower($bag, 'UTF-8');
         }
 
-        $hash = hash('md5', $key);
+        $hash = password_hash($key, PASSWORD_BCRYPT, ['cost' => 10]);
 
-        Cache::set('captcha.' . $hash, 1, $this->expire);
+        Redis::set('captcha.' . $hash, 1, $this->expire);
 
         return [
             'value' => $bag,
@@ -126,13 +126,15 @@ class Captcha
     public function check(string $code, string $hash): bool
     {
         $res = false;
-        if (Cache::get('captcha.' . $hash)) {
-            $code = mb_strtolower($code, 'UTF-8');
-            $res  = password_verify($code, $hash);
+        if (!Redis::exists('captcha.' . $hash)) {
+            return false;
         }
 
+        $code = mb_strtolower($code, 'UTF-8');
+        $res  = password_verify($code, $hash);
+
         if ($res) {
-            Cache::delete('captcha.' . $hash);
+            Redis::del('captcha.' . $hash);
         }
 
         return $res;

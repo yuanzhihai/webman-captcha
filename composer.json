@@ -1,0 +1,20 @@
+{
+    "name": "yzh52521/webman-captcha",
+    "description": "captcha package for webman",
+    "authors": [
+        {
+            "name": "yzh52521",
+            "email": "396751927@qq.com"
+        }
+    ],
+    "license": "Apache-2.0",
+    "require": {
+        "php": ">=7.4",
+        "workerman/webman-framework": "^1.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "yzh52521\\captcha\\": "src/"
+        }
+    }
+}

@@ -158,7 +158,7 @@ class Captcha
         // 图片高(px)
         $this->imageH || $this->imageH = $this->fontSize * 2.5;
         // 建立一幅 $this->imageW x $this->imageH 的图像
-        $this->im = imagecreate( $this->imageW,$this->imageH );
+        $this->im = imagecreate( (int)$this->imageW,(int)$this->imageH );
         // 设置背景
         imagecolorallocate( $this->im,$this->bg[0],$this->bg[1],$this->bg[2] );
 
@@ -254,8 +254,8 @@ class Captcha
                 while ( $i > 0 ) {
                     imagesetpixel(
                         $this->im,
-                        intval($px + $i),
-                        intval($py + $i),
+                        intval( $px + $i ),
+                        intval( $py + $i ),
                         $this->color
                     ); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
                     $i--;
@@ -265,7 +265,7 @@ class Captcha
 
         // 曲线后部分
         $A   = mt_rand( 1,$this->imageH / 2 ); // 振幅
-        $f   = mt_rand( intval(-$this->imageH / 4),intval($this->imageH / 4) ); // X轴方向偏移量
+        $f   = mt_rand( intval( -$this->imageH / 4 ),intval( $this->imageH / 4 ) ); // X轴方向偏移量
         $T   = mt_rand( $this->imageH,$this->imageW * 2 ); // 周期
         $w   = ( 2 * M_PI ) / $T;
         $b   = $py - $A * sin( $w * $px + $f ) - $this->imageH / 2;
@@ -277,7 +277,7 @@ class Captcha
                 $py = $A * sin( $w * $px + $f ) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
                 $i  = (int)( $this->fontSize / 5 );
                 while ( $i > 0 ) {
-                    imagesetpixel( $this->im,intval($px + $i),intval($py + $i),$this->color );
+                    imagesetpixel( $this->im,intval( $px + $i ),intval( $py + $i ),$this->color );
                     $i--;
                 }
             }

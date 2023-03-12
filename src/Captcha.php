@@ -157,6 +157,10 @@ class Captcha
         $this->imageW || $this->imageW = $this->length * $this->fontSize * 1.5 + $this->length * $this->fontSize / 2;
         // 图片高(px)
         $this->imageH || $this->imageH = $this->fontSize * 2.5;
+
+        $this->imageW = intval( $this->imageW );
+        $this->imageH = intval( $this->imageH );
+
         // 建立一幅 $this->imageW x $this->imageH 的图像
         $this->im = imagecreate( (int)$this->imageW,(int)$this->imageH );
         // 设置背景
@@ -196,16 +200,15 @@ class Captcha
         }
 
         // 绘验证码
-        $text = $this->useZh ? preg_split( '/(?<!^)(?!$)/u',$generator['value'] ) : str_split(
-            $generator['value']
-        ); // 验证码
+        $text = $this->useZh ? preg_split( '/(?<!^)(?!$)/u',$generator['value'] ) : str_split( $generator['value'] ); // 验证码
 
         foreach ( $text as $index => $char ) {
+
             $x     = $this->fontSize * ( $index + 1 ) * ( $this->math ? 1 : 1.5 );
             $y     = $this->fontSize + mt_rand( 10,20 );
             $angle = $this->math ? 0 : mt_rand( -40,40 );
 
-            imagettftext( $this->im,(int)$this->fontSize,(int)$angle,(int)$x,(int)$y,$this->color,$fontttf,$char );
+            imagettftext( $this->im,intval( $this->fontSize ),intval( $this->fontSize ),intval( $x ),intval( $y ),$this->color,$fontttf,$char );
         }
 
         ob_start();
@@ -252,12 +255,7 @@ class Captcha
                 $py = $A * sin( $w * $px + $f ) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
                 $i  = (int)( $this->fontSize / 5 );
                 while ( $i > 0 ) {
-                    imagesetpixel(
-                        $this->im,
-                        intval( $px + $i ),
-                        intval( $py + $i ),
-                        $this->color
-                    ); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
+                    imagesetpixel( $this->im,intval( $px + $i ),intval( $py + $i ),$this->color ); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
                     $i--;
                 }
             }
@@ -320,7 +318,7 @@ class Captcha
 
         $gb = $bgs[array_rand( $bgs )];
 
-        [$width,$height] = @getimagesize( $gb );
+        list( $width,$height ) = @getimagesize( $gb );
         // Resample
         $bgImage = @imagecreatefromjpeg( $gb );
         @imagecopyresampled( $this->im,$bgImage,0,0,0,0,$this->imageW,$this->imageH,$width,$height );
